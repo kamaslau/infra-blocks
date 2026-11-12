@@ -14,20 +14,33 @@ These units are built around those three failures. Each one documents its regist
 
 ## Units
 
-| Unit | What it gives you | When a client needs it |
-|---|---|---|
-| [k3s](https://github.com/kamaslau/infra-blocks-k3s) | Single-binary Kubernetes, with Tailscale joining cloud and on-prem nodes into one network | They have a server room *and* cloud hosts, and want one place to deploy |
-| [caddy](https://github.com/kamaslau/infra-blocks-caddy) | Automatic TLS reverse proxy, DNS-01 via Cloudflare | Port 80 is closed by policy, or the domain sits behind Cloudflare |
-| [postgresql](https://github.com/kamaslau/infra-blocks-postgresql) | PostgreSQL with Adminer | Someone other than you needs to open the data and look at it |
-| [mysql](https://github.com/kamaslau/infra-blocks-mysql) | MySQL / MariaDB with Adminer | Migrating off a legacy system that was already MySQL |
-| [mongodb](https://github.com/kamaslau/infra-blocks-mongodb) | MongoDB with the official Node.js driver | Document data, or a schema that is still moving |
-| [redis](https://github.com/kamaslau/infra-blocks-redis) | Redis with the official Node.js driver | Cache, session store, or a job queue |
-| [neo4j](https://github.com/kamaslau/infra-blocks-neo4j) | Neo4j with the official Node.js driver | The question is about multi-hop relationships a join table cannot express |
-| [influxdb](https://github.com/kamaslau/infra-blocks-influxdb) | InfluxDB | Time series from sensors — the IoT side of the house |
-| [prometheus](https://github.com/kamaslau/infra-blocks-prometheus) | Prometheus + Grafana + node-exporter | The first time they ask "how do we know the server is still up" |
-| [gitea](https://github.com/kamaslau/infra-blocks-gitea) | Self-hosted Git | Code cannot leave the intranet, or a contractor handover needs a private repo |
-| [verdaccio](https://github.com/kamaslau/infra-blocks-verdaccio) | Private npm registry | Private packages cannot go public, and builds must be reproducible offline |
-| [wordpress](https://github.com/kamaslau/infra-blocks-wordpress) | WordPress | They want a site they can edit themselves, not a developer for every sentence |
+Two groups. **Runtime** serves traffic or keeps the machines talking; **storage** still holds data after the process stops.
+
+Every unit follows the same rules: one service, one port, one documented credential, removed with `docker compose down -v`. The ports below are defaults — each one is a variable in `.env` (`.env.sample` in a few units) and can be changed without touching the compose file.
+
+### Runtime
+
+| Unit | What it gives you | Default port | When a client needs it |
+|---|---|---|---|
+| [caddy](https://github.com/kamaslau/infra-blocks-caddy) | Automatic TLS reverse proxy, DNS-01 via Cloudflare | 80, 443 (+ 443/udp) | Port 80 is closed by policy, or the domain sits behind Cloudflare |
+| [gitea](https://github.com/kamaslau/infra-blocks-gitea) | Self-hosted Git | 3000 (web), 2222 (SSH) | Code cannot leave the intranet, or a contractor handover needs a private repo |
+| [k3s](https://github.com/kamaslau/infra-blocks-k3s) | Single-binary Kubernetes, with Tailscale joining cloud and on-prem nodes into one network | 6443 (API server) | They have a server room *and* cloud hosts, and want one place to deploy |
+| [prometheus](https://github.com/kamaslau/infra-blocks-prometheus) | Prometheus + Grafana + node-exporter | 9090 · 3000 (Grafana) · 9100 | The first time they ask "how do we know the server is still up" |
+| [verdaccio](https://github.com/kamaslau/infra-blocks-verdaccio) | Private npm registry | 4873 | Private packages cannot go public, and builds must be reproducible offline |
+| [wordpress](https://github.com/kamaslau/infra-blocks-wordpress) | WordPress on MySQL | 80 | They want a site they can edit themselves, not a developer for every sentence |
+
+### Storage
+
+| Unit | What it gives you | Default port | When a client needs it |
+|---|---|---|---|
+| [influxdb](https://github.com/kamaslau/infra-blocks-influxdb) | InfluxDB 3 with its own query UI | 8181 (HTTP), 8888 (UI) | Time series from sensors — the IoT side of the house |
+| [mongodb](https://github.com/kamaslau/infra-blocks-mongodb) | MongoDB with the official Node.js driver | 27017 | Document data, or a schema that is still moving |
+| [mysql](https://github.com/kamaslau/infra-blocks-mysql) | MySQL / MariaDB with Adminer | 3306 (Adminer 8080) | Migrating off a legacy system that was already MySQL |
+| [neo4j](https://github.com/kamaslau/infra-blocks-neo4j) | Neo4j with the official Node.js driver | 7687 (Bolt), 7474 (browser) | The question is about multi-hop relationships a join table cannot express |
+| [postgresql](https://github.com/kamaslau/infra-blocks-postgresql) | PostgreSQL with Adminer | 5432 (Adminer 8081) | Someone other than you needs to open the data and look at it |
+| [redis](https://github.com/kamaslau/infra-blocks-redis) | Redis with the official Node.js client | 6379 | Cache, session store, or a job queue |
+
+Prometheus sits with runtime rather than storage: it does keep samples, but what you operate is a monitoring service. The two database units that ship Adminer list its port next to the database's, because that is the port the person you are handing over to will actually open.
 
 ## Not in this list
 
