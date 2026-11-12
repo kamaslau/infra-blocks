@@ -40,6 +40,10 @@ Application scaffolds — [fiber](https://github.com/kamaslau/trial-fiber), [act
 - Every unit has a `Verify` section with a command that proves the service actually answers.
 - Ports are published on the host, not bound to `127.0.0.1` by default — these units are meant for a machine you already control. On a host with a public interface, change `${PORT}:…` to `127.0.0.1:${PORT}:…` before the first `up`.
 
+## License
+
+MIT — see [LICENSE](https://github.com/kamaslau/infra-blocks/blob/main/LICENSE). Take what is useful.
+
 ## Maintained by
 
 Kamas Lau — [kamaslau.com](https://www.kamaslau.com/works?utm_source=github&utm_medium=profile&utm_campaign=always-on) · I do this for foreign companies operating in China, on their own infrastructure.
