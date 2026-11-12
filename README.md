@@ -21,35 +21,35 @@ These units are built around those three failures. Each one documents its regist
 
 Two groups. **Runtime** serves traffic or keeps the machines talking; **storage** still holds data after the process stops.
 
-Every unit follows the same rules: one service, one port, one documented credential, removed with `docker compose down -v`. The ports below are defaults — each one is a variable in `.env`, and can be changed without touching the compose file.
+Every unit follows the same rules: one service, one port, one documented credential, removed with `docker compose down -v`. The ports below are defaults, and every one is a variable in `.env` — change it without touching the compose file. Each cell is a list with the **service port first**: that is the one a firewall rule gets written against.
 
 ### Runtime
 
-| Unit | What it gives you | Default port | When a client needs it |
+| Unit | What it gives you | Default ports | When a client needs it |
 |---|---|---|---|
-| [caddy](https://github.com/kamaslau/infra-blocks-caddy) | Automatic TLS reverse proxy, DNS-01 via Cloudflare | 80, 443 (+ 443/udp) | Port 80 is closed by policy, or the domain sits behind Cloudflare |
-| [gitea](https://github.com/kamaslau/infra-blocks-gitea) | Self-hosted Git | 3000 (web), 2222 (SSH) | Code cannot leave the intranet, or a contractor handover needs a private repo |
+| [caddy](https://github.com/kamaslau/infra-blocks-caddy) | Automatic TLS reverse proxy, DNS-01 via Cloudflare | 443 (HTTPS)<br>80 (HTTP → redirect)<br>443/udp (HTTP/3) | Port 80 is closed by policy, or the domain sits behind Cloudflare |
+| [gitea](https://github.com/kamaslau/infra-blocks-gitea) | Self-hosted Git | 3000 (web)<br>2222 (SSH) | Code cannot leave the intranet, or a contractor handover needs a private repo |
 | [k3s](https://github.com/kamaslau/infra-blocks-k3s) | Single-binary Kubernetes, with Tailscale joining cloud and on-prem nodes into one network | 6443 (API server) | They have a server room *and* cloud hosts, and want one place to deploy |
-| [prometheus](https://github.com/kamaslau/infra-blocks-prometheus) | Prometheus + Grafana + node-exporter | 9090 · 3000 (Grafana) · 9100 | The first time they ask "how do we know the server is still up" |
+| [prometheus](https://github.com/kamaslau/infra-blocks-prometheus) | Prometheus + Grafana + node-exporter | 9090 (Prometheus)<br>3000 (Grafana)<br>9100 (node-exporter) | The first time they ask "how do we know the server is still up" |
 | [verdaccio](https://github.com/kamaslau/infra-blocks-verdaccio) | Private npm registry | 4873 | Private packages cannot go public, and builds must be reproducible offline |
 | [wordpress](https://github.com/kamaslau/infra-blocks-wordpress) | WordPress on MySQL | 80 | They want a site they can edit themselves, not a developer for every sentence |
 
 ### Storage
 
-| Unit | What it gives you | Default port | When a client needs it |
+| Unit | What it gives you | Default ports | When a client needs it |
 |---|---|---|---|
-| [influxdb](https://github.com/kamaslau/infra-blocks-influxdb) | InfluxDB 3 with its own query UI | 8181 (HTTP), 8888 (UI) | Time series from sensors — the IoT side of the house |
+| [influxdb](https://github.com/kamaslau/infra-blocks-influxdb) | InfluxDB 3 with its own query UI | 8181 (HTTP)<br>8888 (UI) | Time series from sensors — the IoT side of the house |
 | [mongodb](https://github.com/kamaslau/infra-blocks-mongodb) | MongoDB with the official Node.js driver | 27017 | Document data, or a schema that is still moving |
-| [mysql](https://github.com/kamaslau/infra-blocks-mysql) | MySQL / MariaDB with Adminer | 3306 (Adminer 8080) | Migrating off a legacy system that was already MySQL |
-| [neo4j](https://github.com/kamaslau/infra-blocks-neo4j) | Neo4j with the official Node.js driver | 7687 (Bolt), 7474 (browser) | The question is about multi-hop relationships a join table cannot express |
-| [postgresql](https://github.com/kamaslau/infra-blocks-postgresql) | PostgreSQL with Adminer | 5432 (Adminer 8081) | Someone other than you needs to open the data and look at it |
+| [mysql](https://github.com/kamaslau/infra-blocks-mysql) | MySQL / MariaDB with Adminer | 3306 (MySQL)<br>8080 (Adminer) | Migrating off a legacy system that was already MySQL |
+| [neo4j](https://github.com/kamaslau/infra-blocks-neo4j) | Neo4j with the official Node.js driver | 7687 (Bolt)<br>7474 (Neo4j Browser) | The question is about multi-hop relationships a join table cannot express |
+| [postgresql](https://github.com/kamaslau/infra-blocks-postgresql) | PostgreSQL with Adminer | 5432 (PostgreSQL)<br>8081 (Adminer) | Someone other than you needs to open the data and look at it |
 | [redis](https://github.com/kamaslau/infra-blocks-redis) | Redis with the official Node.js client | 6379 | Cache, session store, or a job queue |
 
-Prometheus sits with runtime rather than storage: it does keep samples, but what you operate is a monitoring service. The two database units that ship Adminer list its port next to the database's, because that is the port the person you are handing over to will actually open.
+UI and agent ports sit under the service port: Adminer under PostgreSQL and MySQL, Grafana under Prometheus, the browser under Neo4j, the HTTP API above the UI in InfluxDB. They are listed because they are the ports the person you are handing over to will actually open. Prometheus sits with runtime rather than storage — it does keep samples, but what you operate is a monitoring service.
 
 ## Not in this list
 
-Application starters live in their own family: [fiber](https://github.com/kamaslau/app-starters-fiber), [actix-web](https://github.com/kamaslau/app-starters-actix-web), [flask](https://github.com/kamaslau/app-starters-flask), [koajs](https://github.com/kamaslau/app-starters-koajs), [electron](https://github.com/kamaslau/app-starters-electron), [tauri](https://github.com/kamaslau/app-starters-tauri). They answer "what do I write the app in", which is a different question from "how do I make it run there".
+Application starters live in their own family: [fiber](https://github.com/kamaslau/app-starters-fiber), [flask](https://github.com/kamaslau/app-starters-flask), [koajs](https://github.com/kamaslau/app-starters-koajs), [actix-web](https://github.com/kamaslau/app-starters-actix-web). They answer "what do I write the app in", which is a different question from "how do I make it run there".
 
 ## Conventions
 
