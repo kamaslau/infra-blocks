@@ -38,7 +38,7 @@ Application scaffolds — [fiber](https://github.com/kamaslau/trial-fiber), [act
 - Ports are declared in `.env`, not hardcoded.
 - Credentials in the README are for local use only and are marked as such.
 - Every unit has a `Verify` section with a command that proves the service actually answers.
-- Nothing binds to `0.0.0.0` by default.
+- Ports are published on the host, not bound to `127.0.0.1` by default — these units are meant for a machine you already control. On a host with a public interface, change `${PORT}:…` to `127.0.0.1:${PORT}:…` before the first `up`.
 
 ## Maintained by
 
