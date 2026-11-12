@@ -1,5 +1,8 @@
 # infra-blocks
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+![Repository size](https://img.shields.io/github/repo-size/kamaslau/infra-blocks?color=56BEB8)
+
 Minimal, disposable service units for standing up a working environment on a machine you have never seen before.
 
 Each unit is one repository. Copy `.env.example` to `.env`, run `docker compose up -d`, and you have a service listening on a documented port with a documented credential. `docker compose down -v` removes all trace of it.
