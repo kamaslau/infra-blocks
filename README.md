@@ -2,7 +2,9 @@
 
 Minimal, disposable service units for standing up a working environment on a machine you have never seen before.
 
-Each unit is one repository. Clone it, copy `.env.example` to `.env`, run `docker compose up -d`, and you have a service listening on a documented port with a documented credential. `docker compose down -v` removes all trace of it.
+Each unit is one repository. Copy `.env.example` to `.env`, run `docker compose up -d`, and you have a service listening on a documented port with a documented credential. `docker compose down -v` removes all trace of it.
+
+Two ways to take one: **clone** it when you want to follow fixes to the unit itself, or **Use this template** to start a repository you own — the copy has no history and never receives upstream changes. This repository is a template too, which is of limited use: copying it gives you this catalogue with every link pointing back here. Copy the units.
 
 Nothing here is clever. Everything here is meant to survive being run by someone who did not write it — on a client's own hardware, behind their firewall, without a vendor console in the loop.
 
@@ -44,7 +46,7 @@ Prometheus sits with runtime rather than storage: it does keep samples, but what
 
 ## Not in this list
 
-Application scaffolds — [fiber](https://github.com/kamaslau/trial-fiber), [actix-web](https://github.com/kamaslau/trial-actix-web), [flask](https://github.com/kamaslau/trial-flask), [koajs](https://github.com/kamaslau/trial-koajs), [electron](https://github.com/kamaslau/trial-electron), [tauri](https://github.com/kamaslau/trial-tauri) — are kept separate. They answer "what do I write the app in", which is a different question from "how do I make it run there".
+Application starters live in their own family: [fiber](https://github.com/kamaslau/app-starters-fiber), [actix-web](https://github.com/kamaslau/app-starters-actix-web), [flask](https://github.com/kamaslau/app-starters-flask), [koajs](https://github.com/kamaslau/app-starters-koajs), [electron](https://github.com/kamaslau/app-starters-electron), [tauri](https://github.com/kamaslau/app-starters-tauri). They answer "what do I write the app in", which is a different question from "how do I make it run there".
 
 ## Conventions
 
