@@ -16,7 +16,7 @@ These units are built around those three failures. Each one documents its regist
 
 Two groups. **Runtime** serves traffic or keeps the machines talking; **storage** still holds data after the process stops.
 
-Every unit follows the same rules: one service, one port, one documented credential, removed with `docker compose down -v`. The ports below are defaults — each one is a variable in `.env` (`.env.sample` in a few units) and can be changed without touching the compose file.
+Every unit follows the same rules: one service, one port, one documented credential, removed with `docker compose down -v`. The ports below are defaults — each one is a variable in `.env`, and can be changed without touching the compose file.
 
 ### Runtime
 
@@ -48,7 +48,7 @@ Application scaffolds — [fiber](https://github.com/kamaslau/trial-fiber), [act
 
 ## Conventions
 
-- Ports are declared in `.env`, not hardcoded.
+- Ports are declared in `.env`, not hardcoded. The template is always `.env.example`: `cp .env.example .env` before the first `up`.
 - Credentials in the README are for local use only and are marked as such.
 - Every unit has a `Verify` section with a command that proves the service actually answers.
 - Ports are published on the host, not bound to `127.0.0.1` by default — these units are meant for a machine you already control. On a host with a public interface, change `${PORT}:…` to `127.0.0.1:${PORT}:…` before the first `up`.
