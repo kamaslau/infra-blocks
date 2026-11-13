@@ -5,9 +5,9 @@
 
 Minimal, disposable service units for standing up a working environment on a machine you have never seen before.
 
-Each unit is one repository. Copy `.env.example` to `.env`, run `docker compose up -d`, and you have a service listening on a documented port with a documented credential. `docker compose down -v` removes all trace of it.
+Each unit is one repository. Copy `.env.example` to `.env`, run `docker compose up -d`, and you have a service listening on a documented port with a documented credential. `docker compose down -v` removes all trace of it. The exception is [k3s](https://github.com/kamaslau/infra-blocks-k3s): it installs onto the host rather than into containers, so its repository carries the commands and the traps instead of a compose file.
 
-Two ways to take one: **clone** it when you want to follow fixes to the unit itself, or **Use this template** to start a repository you own — the copy has no history and never receives upstream changes. This repository is a template too, which is of limited use: copying it gives you this catalogue with every link pointing back here. Copy the units.
+Two ways to take one: **clone** it when you want to follow fixes to the unit itself, or **Use this template** to start a repository you own — the copy has no history and never receives upstream changes. Template status stops at the units: this catalogue is a directory, not a project, so it cannot be used as a template and does not try to be. Copy the units.
 
 Nothing here is clever. Everything here is meant to survive being run by someone who did not write it — on a client's own hardware, behind their firewall, without a vendor console in the loop.
 
@@ -21,7 +21,7 @@ These units are built around those three failures. Each one documents its regist
 
 Two groups. **Runtime** serves traffic or keeps the machines talking; **storage** still holds data after the process stops.
 
-Every unit follows the same rules: one service, one port, one documented credential, removed with `docker compose down -v`. The ports below are defaults, and every one is a variable in `.env` — change it without touching the compose file. Each cell is a list with the **service port first**: that is the one a firewall rule gets written against.
+Every unit follows the same rules: one service, one port, one documented credential, removed with `docker compose down -v`. The ports below are defaults, and every one is a variable in `.env` — change it without touching the compose file; k3s takes its API port from the install command in its own README. Each cell is a list with the **service port first**: that is the one a firewall rule gets written against.
 
 ### Runtime
 
