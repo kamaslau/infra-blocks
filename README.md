@@ -64,4 +64,4 @@ MIT — see [LICENSE](https://github.com/kamaslau/infra-blocks/blob/main/LICENSE
 
 ## Maintained by
 
-Kamas Lau — [kamaslau.com](https://www.kamaslau.com/works?utm_source=github&utm_medium=profile&utm_campaign=always-on) · I do this for foreign companies operating in China, on their own infrastructure.
+Kamas Lau — [kamaslau.com](https://www.kamaslau.com/works?utm_source=github&utm_medium=repo-readme&utm_campaign=always-on&utm_content=index) · I do this for foreign companies operating in China, on their own infrastructure.
