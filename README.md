@@ -51,6 +51,8 @@ UI and agent ports sit under the service port: Adminer under PostgreSQL and MySQ
 
 Application starters live in their own family: [fiber](https://github.com/kamaslau/app-starters-fiber), [flask](https://github.com/kamaslau/app-starters-flask), [koajs](https://github.com/kamaslau/app-starters-koajs), [actix-web](https://github.com/kamaslau/app-starters-actix-web). They answer "what do I write the app in", which is a different question from "how do I make it run there".
 
+Hardware proofs live under `poc-`: one device, one question, no reuse — [pca9685 barrier gate](https://github.com/kamaslau/poc-raspi-pca9685-barrier-gate) asks whether a gate that is already installed can be driven from the software the site already runs. They answer "does this even work", which is the question you ask before either of the other two.
+
 ## Conventions
 
 - Ports are declared in `.env`, not hardcoded. The template is always `.env.example`: `cp .env.example .env` before the first `up`.
