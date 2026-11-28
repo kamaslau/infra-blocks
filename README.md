@@ -51,7 +51,7 @@ UI and agent ports sit under the service port: Adminer under PostgreSQL and MySQ
 
 Application starters live in their own family: [fiber](https://github.com/kamaslau/app-starters-fiber), [flask](https://github.com/kamaslau/app-starters-flask), [koajs](https://github.com/kamaslau/app-starters-koajs), [actix-web](https://github.com/kamaslau/app-starters-actix-web). They answer "what do I write the app in", which is a different question from "how do I make it run there".
 
-Hardware work sits outside both families: [poc-raspi-pca9685-barrier-gate](https://github.com/kamaslau/poc-raspi-pca9685-barrier-gate) asks whether a gate that is already installed can be driven from the software the site already runs, and [poc-raspi-dht-sensor](https://github.com/kamaslau/poc-raspi-dht-sensor) collects DHT11 readings into InfluxDB — one device each, no reuse. They answer "does this even work" and "does the reading survive the trip", which are the questions you ask before either of the other two.
+Hardware work sits outside both families — one device each, no reuse: [poc-raspi-pca9685-barrier-gate](https://github.com/kamaslau/poc-raspi-pca9685-barrier-gate) asks whether a gate that is already installed can be driven from the software the site already runs, [poc-raspi-dht-sensor](https://github.com/kamaslau/poc-raspi-dht-sensor) collects DHT11 readings into InfluxDB, and [poc-esp-morsecho](https://github.com/kamaslau/poc-esp-morsecho) acknowledges MQTT commands by blinking Morse on an ESP32-S3. They answer "does this even work", "does the reading survive the trip" and "can a headless device be reached at all", which are the questions you ask before either of the other two.
 
 ## Conventions
 
